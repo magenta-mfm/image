@@ -29,9 +29,10 @@ Build ISO image:
     - apt-get -y install wget sudo apt-utils > /dev/null
     - cd image
     - wget -q http://releases.ubuntu.com/focal/ubuntu-20.04.3-desktop-amd64.iso
-    - echo "${ISO_SHA}"
+    - env
   script:
-    - ./build_in_pipeline.sh ./ubuntu-20.04.3-desktop-amd64.iso ${ISO_SHA}
+    # - ./build_in_pipeline.sh ./ubuntu-20.04.3-desktop-amd64.iso ${ISO_SHA}
+    - ls
   artifacts:
     paths:
       - ./*.iso
