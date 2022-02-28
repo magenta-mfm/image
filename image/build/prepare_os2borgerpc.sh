@@ -11,13 +11,16 @@ apt-get -y install git
 # Get code for OS2borgerPC
 
 git clone  https://github.com/OS2borgerPC/image/
+# TODO: Delete after merge
 cd image
+git checkout development
+
 # TODO: Delete after merge to master
 git checkout development
 
 # Run customization.
 
-image/scripts/os2borgerpc_setup.sh
+image/scripts/os2borgerpc_setup.sh > /dev/null
 image/scripts/finalize.sh
 
 # Cleanup

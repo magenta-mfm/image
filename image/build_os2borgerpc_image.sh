@@ -1,7 +1,5 @@
 #!/usr/bin/bash
 
-# HOWTO build a CD image with the tools in this directory.
-
 # Ressources:
 # https://help.ubuntu.com/community/LiveCDCustomization
 # https://wiki.ubuntu.com/UbiquityAutomation
@@ -24,12 +22,12 @@ fi
 
 set -ex
 
-build/install_dependencies.sh
+build/install_dependencies.sh > /dev/null
 
 build/extract_iso.sh $ISO_PATH iso
 
 # Unsquash and customize
-sudo unsquashfs -f iso/casper/filesystem.squashfs
+sudo unsquashfs -f iso/casper/filesystem.squashfs > /dev/null
 
 build/chroot_os2borgerpc.sh squashfs-root ./build/prepare_os2borgerpc.sh
 
@@ -55,10 +53,9 @@ cp -r iso_overwrites/* iso/
 
 # Recalculate MD5 sums.
 cd iso
-find -type f -print0 | sudo xargs -0 md5sum |  grep -v isolinux/boot.cat | grep -v md5sum | sudo tee md5sum.txt
-
-# Make image
+md5sum casper/filesystem.squashfs > md5sum.txt
 cd ..
 
+# Make image
 
 xorriso -as mkisofs -r   -V "$IMAGE_NAME"   -o "$IMAGE_NAME".iso   -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot   -boot-load-size 4 -boot-info-table   -eltorito-alt-boot -e boot/grub/efi.img -no-emul-boot   -isohybrid-gpt-basdat -isohybrid-apm-hfsplus   -isohybrid-mbr /usr/lib/ISOLINUX/isohdpfx.bin iso/boot iso
