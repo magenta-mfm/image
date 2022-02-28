@@ -24,13 +24,16 @@ fi
 
 set -ex
 
+printf "\n\n%s\n\n" "=== RUNNING INSTALL_DEPENDENCIES.SH ==="
 build/install_dependencies.sh
 
+printf "\n\n%s\n\n" "=== RUNNING EXTRACT_ISO.SH ==="
 build/extract_iso.sh $ISO_PATH iso
 
 # Unsquash and customize
 sudo unsquashfs -f iso/casper/filesystem.squashfs
 
+printf "\n\n%s\n\n" "=== RUNNING PREPARE_OS2BORGERPC.SH ==="
 build/chroot_os2borgerpc.sh squashfs-root ./build/prepare_os2borgerpc.sh
 
 

@@ -43,7 +43,7 @@ chfn -f Borger user
 adduser user nopasswdlogin
 
 # Setup superuser
-useradd superuser -m -s /bin/bash -p '$6$/c6Zcifihma/P9NL$MJfwhzrFAcQ0Wq992Wc8XvQ.4mb0aPHK7sUyvRMyicghNmfe7zbvwb5j2AI5AEZq3OfVQRQDbGfzgjrxSfKbp1' -U --uid 1001
+useradd superuser -m -s /bin/bash -p '$6$/c6Zcifihma/P9NL$MJfwhzrFAcQ0Wq992Wc8XvQ.4mb0aPHK7sUyvRMyicghNmfe7zbvwb5j2AI5AEZq3OfVQRQDbGfzgjrxSfKbp1' -U
 chfn -f Superuser superuser
 adduser superuser sudo
 
@@ -74,3 +74,8 @@ set_os2borgerpc_config os2borgerpc_version "$VERSION"
 
 # Securing grub
 "$DIR/grub_set_password.py" $(pwgen -N 1 -s 12)
+
+echo "RUNNING: superuser_fix_desktop_shortcuts_permissions:"
+# Setup a script to activate the desktop shortcuts for superuser on login
+# This must run after superuser has been created
+"$DIR/superuser_fix_desktop_shortcuts_permissions.sh"
